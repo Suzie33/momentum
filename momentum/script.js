@@ -6,10 +6,78 @@ const time = document.querySelector('.time'),
   todayDate = document.querySelector('.date'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
-  focus = document.querySelector('.focus');
+  focus = document.querySelector('.focus'),
+  btnUpdateBg = document.querySelector('.btn');
 
 // Options
 const showAmPm = false;
+
+
+// Get Image
+const baseURL = 'assets/images/evening/';
+const images = ['01.jpg', '02.jpg', '03.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
+let i = 0;
+
+function getImage() {
+  const index = i % images.length;
+  const imageSrc = baseURL + images[index];
+  displayBgImage(imageSrc);
+  i++;
+  console.log(i, imageSrc);
+  btnUpdateBg.disabled = true;
+  setTimeout(function() { btnUpdateBg.disabled = false }, 1000);
+} 
+
+// Display BG Image
+function displayBgImage(url) {
+  const body = document.querySelector('body');
+  const src = url;
+  const img = document.createElement('img');
+  img.src = src;
+  img.onload = () => {      
+    body.style.backgroundImage = `url(${src})`;
+  }; 
+}
+
+// Make Images Array
+let IMAGES_URL_ARRAY = [];
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+let stringUrl = '';
+
+function generateUrlString(dayTime) {
+  stringUrl = `assets/images/${dayTime}/${images[Math.floor(getRandomArbitrary(0, 19))]}`;
+}
+
+function addImageToArray(dayTime) {
+  if (stringUrl === '') {
+    generateUrlString(dayTime);
+  }
+  if (IMAGES_URL_ARRAY.includes(stringUrl)) {
+    generateUrlString(dayTime);
+    addImageToArray(dayTime);
+  } else {
+    IMAGES_URL_ARRAY.push(stringUrl);
+  }
+}
+
+for (let i = 1; i <= 6;i++) {
+  addImageToArray('night');
+}
+for (let i = 1; i <= 6;i++) {
+  addImageToArray('morning');
+}
+for (let i = 1; i <= 6;i++) {
+  addImageToArray('day');
+}
+for (let i = 1; i <= 6;i++) {
+  addImageToArray('evening');
+}
+
+console.log(IMAGES_URL_ARRAY);
 
 // Show Time
 function showTime() {
@@ -149,6 +217,7 @@ name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
+btnUpdateBg.addEventListener('click', getImage);
 
 // Run
 showTime();
