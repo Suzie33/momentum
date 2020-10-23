@@ -13,15 +13,21 @@ body {
   text-align: center;
   height: 100vh;
   background-size: cover;
-  color: #000000;
+  color: #bd64af;
 }
 
 .time {
   font-size: 8rem;
+  margin-bottom: 4rem;
 }
 
-h1 {
-  margin-bottom: 3rem;
+.date {
+  font-size: 3.5rem;
+}
+
+.greeting-and-name {
+  margin-bottom: 2rem;
+  display: flex;
 }
 
 h2 {

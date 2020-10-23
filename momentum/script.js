@@ -1,11 +1,15 @@
+const DAYS_OF_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 // DOM Elements
 const time = document.querySelector('.time'),
+  todayDate = document.querySelector('.date'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
   focus = document.querySelector('.focus');
 
 // Options
-const showAmPm = true;
+const showAmPm = false;
 
 // Show Time
 function showTime() {
@@ -17,15 +21,24 @@ function showTime() {
   // Set AM or PM
   const amPm = hour >= 12 ? 'PM' : 'AM';
 
-  // 12hr Format
-  hour = hour % 12 || 12;
-
   // Output Time
   time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(
     sec
   )} ${showAmPm ? amPm : ''}`;
 
   setTimeout(showTime, 1000);
+}
+
+// ShowDate
+function showDate() {
+  let today = new Date(),
+    day = today.getDay(),
+    date = today.getDate(),
+    month = today.getMonth();
+
+    todayDate.innerHTML = `${DAYS_OF_WEEK[day]}<span>, </span>${MONTHS[month]} ${date}`;
+
+    setTimeout(showDate, 1000);
 }
 
 // Add Zeros
@@ -38,20 +51,25 @@ function setBgGreet() {
   let today = new Date(),
     hour = today.getHours();
 
-  if (hour < 12) {
+  if (hour < 6) {
+    // Night
+    document.body.style.backgroundImage =
+    "url('assets/images/night/01.jpg')";
+    greeting.textContent = 'Good Night, ';
+  } else if (hour < 12) {
     // Morning
     document.body.style.backgroundImage =
-      "url('https://i.ibb.co/7vDLJFb/morning.jpg')";
+    "url('assets/images/morning/01.jpg')";
     greeting.textContent = 'Good Morning, ';
   } else if (hour < 18) {
     // Afternoon
     document.body.style.backgroundImage =
-      "url('https://i.ibb.co/3mThcXc/afternoon.jpg')";
+      "url('assets/images/day/01.jpg')";
     greeting.textContent = 'Good Afternoon, ';
   } else {
     // Evening
     document.body.style.backgroundImage =
-      "url('https://i.ibb.co/924T2Wv/night.jpg')";
+      "url('assets/images/evening/01.jpg')";
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = 'white';
   }
@@ -61,6 +79,7 @@ function setBgGreet() {
 function getName() {
   if (localStorage.getItem('name') === null) {
     name.textContent = '[Enter Name]';
+    localStorage.setItem('name', '[Enter Name]')
   } else {
     name.textContent = localStorage.getItem('name');
   }
@@ -71,11 +90,19 @@ function setName(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
-      localStorage.setItem('name', e.target.innerText);
+      if (name.textContent == '') {
+        name.textContent = localStorage.getItem('name');
+      } else {
+        localStorage.setItem('name', e.target.innerText);
+      }
       name.blur();
     }
   } else {
-    localStorage.setItem('name', e.target.innerText);
+    if (name.textContent == '') {
+      name.textContent = localStorage.getItem('name');
+    } else {
+      localStorage.setItem('name', e.target.innerText);
+    }
   }
 }
 
@@ -83,6 +110,7 @@ function setName(e) {
 function getFocus() {
   if (localStorage.getItem('focus') === null) {
     focus.textContent = '[Enter Focus]';
+    localStorage.setItem('focus', '[Enter Focus]')
   } else {
     focus.textContent = localStorage.getItem('focus');
   }
@@ -93,13 +121,29 @@ function setFocus(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
-      localStorage.setItem('focus', e.target.innerText);
+      if (focus.textContent == '') {
+        focus.textContent = localStorage.getItem('focus');
+      } else {
+        localStorage.setItem('focus', e.target.innerText);
+      }
       focus.blur();
     }
   } else {
-    localStorage.setItem('focus', e.target.innerText);
+    if (focus.textContent == '') {
+      focus.textContent = localStorage.getItem('focus');
+    } else {
+      localStorage.setItem('focus', e.target.innerText);
+    }
   }
 }
+
+//Make the fields empty when we click on
+name.addEventListener('click', () => {
+  name.textContent = '';
+})
+focus.addEventListener('click', () => {
+  focus.textContent = '';
+})
 
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
@@ -108,6 +152,7 @@ focus.addEventListener('blur', setFocus);
 
 // Run
 showTime();
+showDate();
 setBgGreet();
 getName();
 getFocus();
