@@ -218,7 +218,7 @@ async function displayQuote() {
 
   let quoteInd = Math.floor(getRandomArbitrary(0, 500));
   quoteText.textContent = data[quoteInd].en;
-  
+
   btnUpdateQuote.disabled = false;
 }
 
@@ -229,7 +229,6 @@ setBgImage(hour);
 setGreeting();
 getName();
 getFocus();
-displayQuote();
 document.addEventListener('DOMContentLoaded', displayQuote);
 
 // Customize Button Show Next Bg Images
