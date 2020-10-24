@@ -1,5 +1,8 @@
 const DAYS_OF_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+let hour = 0;
+let min = 0;
+let sec = 0;
 
 // DOM Elements
 const time = document.querySelector('.time'),
@@ -12,35 +15,10 @@ const time = document.querySelector('.time'),
 // Options
 const showAmPm = false;
 
-
-// Get Image
-const baseURL = 'assets/images/evening/';
-const images = ['01.jpg', '02.jpg', '03.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
-let i = 0;
-
-function getImage() {
-  const index = i % images.length;
-  const imageSrc = baseURL + images[index];
-  displayBgImage(imageSrc);
-  i++;
-  console.log(i, imageSrc);
-  btnUpdateBg.disabled = true;
-  setTimeout(function() { btnUpdateBg.disabled = false }, 1000);
-} 
-
-// Display BG Image
-function displayBgImage(url) {
-  const body = document.querySelector('body');
-  const src = url;
-  const img = document.createElement('img');
-  img.src = src;
-  img.onload = () => {      
-    body.style.backgroundImage = `url(${src})`;
-  }; 
-}
-
 // Make Images Array
-let IMAGES_URL_ARRAY = [];
+const IMAGE_PATHS = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
+
+let imagesUrlArray = [];
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
@@ -49,18 +27,18 @@ function getRandomArbitrary(min, max) {
 let stringUrl = '';
 
 function generateUrlString(dayTime) {
-  stringUrl = `assets/images/${dayTime}/${images[Math.floor(getRandomArbitrary(0, 19))]}`;
+  stringUrl = `assets/images/${dayTime}/${IMAGE_PATHS[Math.floor(getRandomArbitrary(0, 19))]}`;
 }
 
 function addImageToArray(dayTime) {
   if (stringUrl === '') {
     generateUrlString(dayTime);
   }
-  if (IMAGES_URL_ARRAY.includes(stringUrl)) {
+  if (imagesUrlArray.includes(stringUrl)) {
     generateUrlString(dayTime);
     addImageToArray(dayTime);
   } else {
-    IMAGES_URL_ARRAY.push(stringUrl);
+    imagesUrlArray.push(stringUrl);
   }
 }
 
@@ -77,14 +55,15 @@ for (let i = 1; i <= 6;i++) {
   addImageToArray('evening');
 }
 
-console.log(IMAGES_URL_ARRAY);
+console.log(imagesUrlArray);
 
 // Show Time
 function showTime() {
-  let today = new Date(),
-    hour = today.getHours(),
-    min = today.getMinutes(),
-    sec = today.getSeconds();
+  let today = new Date();
+
+  hour = today.getHours();
+  min = today.getMinutes();
+  sec = today.getSeconds();
 
   // Set AM or PM
   const amPm = hour >= 12 ? 'PM' : 'AM';
@@ -94,10 +73,22 @@ function showTime() {
     sec
   )} ${showAmPm ? amPm : ''}`;
 
+  // Update Bg Image when an hour starts
+  if (min === 0 && sec === 0) {
+    setBgImage(hour);
+    setGreeting();
+  }
+
+  // Update date when a new day starts
+  if (hour === 0 && min === 0 && sec === 0) {
+    showDate();
+    setGreeting();
+  }
+
   setTimeout(showTime, 1000);
 }
 
-// ShowDate
+// Show Date
 function showDate() {
   let today = new Date(),
     day = today.getDay(),
@@ -105,8 +96,6 @@ function showDate() {
     month = today.getMonth();
 
     todayDate.innerHTML = `${DAYS_OF_WEEK[day]}<span>, </span>${MONTHS[month]} ${date}`;
-
-    setTimeout(showDate, 1000);
 }
 
 // Add Zeros
@@ -115,29 +104,28 @@ function addZero(n) {
 }
 
 // Set Background and Greeting
-function setBgGreet() {
+function setBgImage(hour) {
+    
+  let bgImageSrc = imagesUrlArray[hour];
+
+  const img = document.createElement('img');
+  img.src = bgImageSrc;
+  img.onload = () => {      
+    document.body.style.backgroundImage = `url('${bgImageSrc}')`;
+  }; 
+}
+
+function setGreeting() {
   let today = new Date(),
     hour = today.getHours();
 
   if (hour < 6) {
-    // Night
-    document.body.style.backgroundImage =
-    "url('assets/images/night/01.jpg')";
     greeting.textContent = 'Good Night, ';
   } else if (hour < 12) {
-    // Morning
-    document.body.style.backgroundImage =
-    "url('assets/images/morning/01.jpg')";
     greeting.textContent = 'Good Morning, ';
   } else if (hour < 18) {
-    // Afternoon
-    document.body.style.backgroundImage =
-      "url('assets/images/day/01.jpg')";
     greeting.textContent = 'Good Afternoon, ';
   } else {
-    // Evening
-    document.body.style.backgroundImage =
-      "url('assets/images/evening/01.jpg')";
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = 'white';
   }
@@ -217,11 +205,31 @@ name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
-btnUpdateBg.addEventListener('click', getImage);
+
 
 // Run
 showTime();
 showDate();
-setBgGreet();
+setBgImage(hour);
+setGreeting();
 getName();
 getFocus();
+
+// Customize Button Show Next Bg Images
+let i = hour;
+let index = i;
+
+function scrollBgImages() {
+  if (index === 23) {
+    index = 0;
+  } else {
+    index++;
+  }
+
+  setBgImage(index);
+
+  btnUpdateBg.disabled = true;
+    setTimeout(function() { btnUpdateBg.disabled = false }, 1000);
+}
+
+btnUpdateBg.addEventListener('click', scrollBgImages);
