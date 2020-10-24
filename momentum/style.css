@@ -13,17 +13,21 @@ body {
   text-align: center;
   height: 100vh;
   background-size: cover;
-  color: #bd64af;
+  color: #000;
   transition: background-image 1s ease-in-out;
 }
 
 .time {
   font-size: 8rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .date {
   font-size: 3.5rem;
+}
+
+.focus {
+  margin-bottom: 2em;
 }
 
 .greeting-and-name {
@@ -36,7 +40,7 @@ h2 {
   opacity: 0.8;
 }
 
-.btn {
+.bg-btn {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -50,15 +54,52 @@ h2 {
   filter: grayscale(1);
   margin: 10px;
 }
-.btn:hover {
+.bg-btn:hover {
   filter: grayscale(.8);
+  cursor: pointer;
 }
-.btn:active,
-.btn:focus {
+.bg-btn:active,
+.bg-btn:focus {
   outline: 0;
 }
-.btn:active{
-  transform: scale(1.02)
+.bg-btn:active{
+  transform: scale(1.02);
+}
+
+.quote-btn {
+  flex-shrink: 0;
+  position: static;
+  margin: 0 0 0 20px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: url("https://www.pngarts.com/files/7/Update-Button-PNG-Image.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: grayscale(1);
+}
+.quote-btn:hover {
+  filter: grayscale(.8);
+  cursor: pointer;
+}
+.quote-btn:active,
+.quote-btn:focus {
+  outline: 0;
+}
+.quote-btn:active{
+  transform: scale(1.02);
+}
+
+.quote {
+  margin: 0;
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  background: #eee;
+  opacity: .5;
+  padding: 1em;
+  border-radius: 1em;
+  line-height: 1.4;
 }
 
 @media (max-width: 700px) {

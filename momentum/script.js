@@ -10,7 +10,9 @@ const time = document.querySelector('.time'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
   focus = document.querySelector('.focus'),
-  btnUpdateBg = document.querySelector('.btn');
+  btnUpdateBg = document.querySelector('.bg-btn'),
+  quoteText = document.querySelector('.quote-text'),
+  btnUpdateQuote = document.querySelector('.quote-btn');
 
 // Options
 const showAmPm = false;
@@ -206,6 +208,19 @@ name.addEventListener('blur', setName);
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 
+// Display Quotes
+async function displayQuote() {  
+  btnUpdateQuote.disabled = true;
+
+  const url = `https://programming-quotes-api.herokuapp.com/quotes/`;
+  const res = await fetch(url);
+  const data = await res.json(); 
+
+  let quoteInd = Math.floor(getRandomArbitrary(0, 500));
+  quoteText.textContent = data[quoteInd].en;
+  
+  btnUpdateQuote.disabled = false;
+}
 
 // Run
 showTime();
@@ -214,6 +229,8 @@ setBgImage(hour);
 setGreeting();
 getName();
 getFocus();
+displayQuote();
+document.addEventListener('DOMContentLoaded', displayQuote);
 
 // Customize Button Show Next Bg Images
 let i = hour;
@@ -229,7 +246,8 @@ function scrollBgImages() {
   setBgImage(index);
 
   btnUpdateBg.disabled = true;
-    setTimeout(function() { btnUpdateBg.disabled = false }, 1000);
+  setTimeout(function() { btnUpdateBg.disabled = false }, 1000);
 }
 
 btnUpdateBg.addEventListener('click', scrollBgImages);
+btnUpdateQuote.addEventListener('click', displayQuote);
