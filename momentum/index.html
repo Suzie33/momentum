@@ -4,22 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/owfont-regular.css" />
+  <link rel="stylesheet" href="css/style.css" />
   <title>momentum</title>
 </head>
 <body>
   <button class="bg-btn"></button>
-  <span class="date"></span>
-  <time class="time"></time>
-  <h1 class="greeting-and-name">
-    <span class="greeting"></span>
-    <span class="name" contenteditable="true"></span>
-  </h1>
-  <h2>What Is Your Focus For Today?</h2>
-  <h2 class="focus" contenteditable="true"></h2>
-  <div class="quote">
-    <blockquote class="quote-text"></blockquote>
-    <button class="btn quote-btn"></button>
+  <div class="main">
+    <span class="date"></span>
+    <time class="time"></time>
+    <h1 class="greeting-and-name">
+      <span class="greeting"></span>
+      <span class="name" contenteditable="true"></span>
+    </h1>
+    <h2>What Is Your Focus For Today?</h2>
+    <h2 class="focus" contenteditable="true"></h2>
+    <div class="quote">
+      <blockquote class="quote-text"></blockquote>
+      <button class="btn quote-btn"></button>
+    </div>
+  </div>
+  <div class="weather">
+    <div class="weather_city" contenteditable="true">Saint Petersburg</div>
+    <i class="weather_icon owf"></i>
+    <div class="weather_temperature"></div>
+    <div class="weather_description">
+      <div class="weather_humidity"></div>
+      <div class="weather_wind"></div>
+    </div>
   </div>
 
   <script src="script.js"></script>

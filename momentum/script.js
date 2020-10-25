@@ -12,7 +12,12 @@ const time = document.querySelector('.time'),
   focus = document.querySelector('.focus'),
   btnUpdateBg = document.querySelector('.bg-btn'),
   quoteText = document.querySelector('.quote-text'),
-  btnUpdateQuote = document.querySelector('.quote-btn');
+  btnUpdateQuote = document.querySelector('.quote-btn'),
+  weatherIcon = document.querySelector('.weather_icon'),
+  temperature =  document.querySelector('.weather_temperature'),
+  humidity = document.querySelector('.weather_humidity'),
+  wind = document.querySelector('.weather_wind'),
+  weatherCity = document.querySelector('.weather_city');
 
 // Options
 const showAmPm = false;
@@ -123,6 +128,7 @@ function setGreeting() {
 
   if (hour < 6) {
     greeting.textContent = 'Good Night, ';
+    document.body.style.color = 'white';
   } else if (hour < 12) {
     greeting.textContent = 'Good Morning, ';
   } else if (hour < 18) {
@@ -222,6 +228,46 @@ async function displayQuote() {
   btnUpdateQuote.disabled = false;
 }
 
+// Get Info About Weather
+async function getWeather() {
+  if (localStorage.getItem('city') !== null) {
+    weatherCity.textContent = localStorage.getItem('city');
+  }
+
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${weatherCity.textContent}&lang=en&appid=de5cb7729521ae4cabdc74e7592cc618&units=metric`;
+  const response = await fetch(url);
+  const data = await response.json(); 
+  if (response.status === 404) {
+    weatherCity.textContent = 'City not found';
+    localStorage.setItem('city', weatherCity.textContent);
+    
+    weatherIcon.className = 'weather_icon owf';
+    temperature.textContent = '';
+    humidity.textContent = '';
+    wind.textContent = '';
+  }
+
+  weatherIcon.className = 'weather_icon owf';
+  weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+  temperature.textContent = `${data.main.temp}°C`;
+  humidity.innerHTML = `&#128167; ${data.main.humidity} %`;
+  wind.innerHTML = `💨 ${data.wind.speed} m/s`;
+}
+
+function setCity(event) {
+  if (event.code === 'Enter') {
+    if (weatherCity.textContent === '') {
+      weatherCity.textContent = localStorage.getItem('city');
+    }
+    localStorage.setItem('city', weatherCity.textContent);
+    getWeather();
+    
+    weatherCity.blur();
+  }
+}
+
+weatherCity.addEventListener('keypress', setCity);
+
 // Run
 showTime();
 showDate();
@@ -230,6 +276,7 @@ setGreeting();
 getName();
 getFocus();
 document.addEventListener('DOMContentLoaded', displayQuote);
+document.addEventListener('DOMContentLoaded', getWeather);
 
 // Customize Button Show Next Bg Images
 let i = hour;

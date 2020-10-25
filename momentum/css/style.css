@@ -6,15 +6,20 @@
 
 body {
   font-family: 'Quicksand', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
   text-align: center;
   height: 100vh;
   background-size: cover;
   color: #000;
   transition: background-image 1s ease-in-out;
+}
+
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .time {
@@ -100,6 +105,42 @@ h2 {
   padding: 1em;
   border-radius: 1em;
   line-height: 1.4;
+  color: #000;
+}
+
+.weather {
+  width: 250px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.weather_city {  
+  padding: 10px 0;
+  margin: 0 auto;
+  background-color: rgba(204, 204, 204, .5);
+  border-radius: 5px;
+}
+
+.weather_temperature {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+.weather_description {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  font-size: 18px;
+  padding: 10px 10px;
+  color: #ffffff;
+  background-color:rgba(68, 170, 221, .6);
+  border-radius: 5px;
+}
+
+.weather_icon {
+  font-size: 80px;
+  color: #44aadd;
 }
 
 @media (max-width: 700px) {
