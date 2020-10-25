@@ -25,6 +25,7 @@ body {
 
 .main-frame {
   width: 50%;
+  margin-top: 10px;
   margin-bottom: 2em;
   display: flex;
   flex-direction: column;

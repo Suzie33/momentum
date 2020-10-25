@@ -254,9 +254,12 @@ async function handleWeather() {
 
 function setCity(event) {
   if (event.code === 'Enter') {
-    if (weatherCity.textContent === '') {
-      weatherCity.textContent = localStorage.getItem('city');
+    if (weatherCity.textContent === '' && localStorage.getItem('city') === null) {
+      localStorage.setItem('city', 'Saint Petersburg');
     }
+    if (weatherCity.textContent === '' && localStorage.getItem('city') !== null) {
+      weatherCity.textContent = localStorage.getItem('city');
+    } 
     localStorage.setItem('city', weatherCity.textContent);
     handleWeather();
     
