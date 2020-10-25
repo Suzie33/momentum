@@ -206,6 +206,9 @@ name.addEventListener('click', () => {
 focus.addEventListener('click', () => {
   focus.textContent = '';
 })
+weatherCity.addEventListener('click', () => {
+  weatherCity.textContent = '';
+})
 
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
@@ -252,8 +255,8 @@ async function handleWeather() {
   wind.innerHTML = `💨 ${data.wind.speed} m/s`;
 }
 
-function setCity(event) {
-  if (event.code === 'Enter') {
+function setCity(e) {
+  if (e.which == 13 || e.keyCode == 13) {
     if (weatherCity.textContent === '' && localStorage.getItem('city') === null) {
       localStorage.setItem('city', 'Saint Petersburg');
     }
