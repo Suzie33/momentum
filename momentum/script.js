@@ -62,8 +62,6 @@ for (let i = 1; i <= 6;i++) {
   addImageToArray('evening');
 }
 
-console.log(imagesUrlArray);
-
 // Show Time
 function showTime() {
   let today = new Date();
@@ -229,7 +227,7 @@ async function displayQuote() {
 }
 
 // Get Info About Weather
-async function getWeather() {
+async function handleWeather() {
   if (localStorage.getItem('city') !== null) {
     weatherCity.textContent = localStorage.getItem('city');
   }
@@ -240,7 +238,7 @@ async function getWeather() {
   if (response.status === 404) {
     weatherCity.textContent = 'City not found';
     localStorage.setItem('city', weatherCity.textContent);
-    
+
     weatherIcon.className = 'weather_icon owf';
     temperature.textContent = '';
     humidity.textContent = '';
@@ -260,7 +258,7 @@ function setCity(event) {
       weatherCity.textContent = localStorage.getItem('city');
     }
     localStorage.setItem('city', weatherCity.textContent);
-    getWeather();
+    handleWeather();
     
     weatherCity.blur();
   }
@@ -276,7 +274,7 @@ setGreeting();
 getName();
 getFocus();
 document.addEventListener('DOMContentLoaded', displayQuote);
-document.addEventListener('DOMContentLoaded', getWeather);
+document.addEventListener('DOMContentLoaded', handleWeather);
 
 // Customize Button Show Next Bg Images
 let i = hour;

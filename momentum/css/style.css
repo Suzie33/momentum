@@ -8,41 +8,68 @@ body {
   font-family: 'Quicksand', sans-serif;
 
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   background-size: cover;
   color: #000;
   transition: background-image 1s ease-in-out;
 }
 
 .main {
-  height: 100vh;
+  padding-bottom: 10px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.main-frame {
+  width: 50%;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  background-color: rgba(204, 204, 204, .7);
+}
+
+.date_and_time {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  /* border-radius: 1em;
+  background-color: rgba(204, 204, 204, .7); */
+}
+
 .time {
   font-size: 8rem;
-  margin-bottom: 2rem;
 }
 
 .date {
   font-size: 3.5rem;
 }
 
-.focus {
-  margin-bottom: 2em;
+.focus-frame {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  /* border-radius: 1em;
+  background-color: rgba(204, 204, 204, .7); */
 }
 
 .greeting-and-name {
+  padding: 5px 15px;
   margin-bottom: 2rem;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* border-radius: 15px;
+  background-color: rgba(204, 204, 204, .7); */
 }
 
-h2 {
-  margin-bottom: 0.5rem;
-  opacity: 0.8;
+.focus-q {
+  margin-bottom: 5px;
 }
 
 .bg-btn {
@@ -58,9 +85,10 @@ h2 {
   background-repeat: no-repeat;
   filter: grayscale(1);
   margin: 10px;
+  transition: .3s;
 }
 .bg-btn:hover {
-  filter: grayscale(.8);
+  opacity: .5;
   cursor: pointer;
 }
 .bg-btn:active,
@@ -73,18 +101,19 @@ h2 {
 
 .quote-btn {
   flex-shrink: 0;
-  position: static;
-  margin: 0 0 0 20px;
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  right: 15px;
+  width: 40px;
+  height: 40px;
   border: 0;
   background: url("https://www.pngarts.com/files/7/Update-Button-PNG-Image.png");
   background-size: contain;
   background-repeat: no-repeat;
   filter: grayscale(1);
+  transition: .5s;
 }
 .quote-btn:hover {
-  filter: grayscale(.8);
+  opacity: .5;
   cursor: pointer;
 }
 .quote-btn:active,
@@ -92,20 +121,27 @@ h2 {
   outline: 0;
 }
 .quote-btn:active{
-  transform: scale(1.02);
+  transform: scale(1.04);
 }
 
 .quote {
   margin: 0;
-  max-width: 80%;
+  width: 80%;
+  position: relative;
   display: flex;
   align-items: center;
   background: #eee;
-  opacity: .5;
-  padding: 1em;
+  opacity: .7;
+  padding: 17px;
+  padding-right: 65px;
   border-radius: 1em;
   line-height: 1.4;
   color: #000;
+}
+
+.quote-text {
+  width: 100%;
+  text-align: center;
 }
 
 .weather {
@@ -113,11 +149,13 @@ h2 {
   position: absolute;
   top: 10px;
   right: 10px;
+  background-color: rgba(204, 204, 204, .3);
 }
 
 .weather_city {  
   padding: 10px 0;
   margin: 0 auto;
+  margin-bottom: 5px;
   background-color: rgba(204, 204, 204, .5);
   border-radius: 5px;
 }
@@ -143,8 +181,65 @@ h2 {
   color: #44aadd;
 }
 
+@media (max-width: 1200px) {
+  .weather {
+    display: block;
+    position: static;
+    margin-top: 10px;
+    margin-bottom: 8vh;
+  }
+  .main-frame {
+    width: 80%;
+  }
+}
+
 @media (max-width: 700px) {
+  body {
+    font-size: 14px;
+  }
+  .main {
+    padding: 0 5px;
+  }
+  .bg-btn {
+    width: 35px;
+    height: 35px;
+    top: 0;
+    left: 0;
+  }
+  .weather {
+    width: 200px;
+    margin-bottom: 1em;
+  }
+  .weather_icon {
+    font-size: 50px;
+  }
+  .weather_temperature {
+    font-size: 25px;
+  }
+  .main-frame {
+    width: 99%;
+  }
+  .date {
+    font-size: 30px;
+  }
   .time {
-    font-size: 6rem;
+    font-size: 4rem;
+  }
+  .date_and_time {
+    margin-bottom: 1rem;
+  }
+  .greeting-and-name {
+    margin-bottom: 10px;
+  }
+  .focus-frame {
+    margin-bottom: 10px;
+  }
+  .quote {
+    width: 99%;
+    padding: 10px;
+    padding-right: 50px;
+  }
+  .quote-btn {
+    right: 5px;
   }
 }
