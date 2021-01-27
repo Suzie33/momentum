@@ -219,12 +219,12 @@ focus.addEventListener('blur', setFocus);
 async function displayQuote() {  
   btnUpdateQuote.disabled = true;
 
-  const url = `https://programming-quotes-api.herokuapp.com/quotes/`;
+  const url = `https://favqs.com/api/qotd`;
   const res = await fetch(url);
   const data = await res.json(); 
 
-  let quoteInd = Math.floor(getRandomArbitrary(0, 500));
-  quoteText.textContent = data[quoteInd].en;
+  // let quoteInd = Math.floor(getRandomArbitrary(0, 500));
+  quoteText.textContent = data.quote.body;
 
   btnUpdateQuote.disabled = false;
 }
